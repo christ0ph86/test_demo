@@ -1,0 +1,219 @@
+name: acms/Export_From_PCX_DEV/Export_ACMSCore
+on:
+  workflow_dispatch:
+env:
+  CA2ApplicationId: 5528b1d6-fa7e-4780-a44a-270de9261dfe
+  CA2ClientSecret: FCT8Q~2yhM~9FCJ4Jt13-lAE0oe7GGwQOg-6sds-
+  CA2Pass: ''
+  CA2User: ''
+  CA9ApplicationId: f52347ef-3e59-492a-9aad-812b515bc72a
+  CA9ClientSecret: 4kp8Q~OE~dbM9lWt-gPAc2Sk5A_V~ZxsCv-pydf4
+  CA9Pass: ''
+  CA9User: ''
+  PCXApplicationId: 27fe86a5-0d28-441a-a9a4-bcd02ceacdb6
+  PCXClientSecret: 49bz~.Dq_SiWq-I1vL8o.-RlX6oKC7Etl1
+  PCXPass: ''
+  ProCourtsId: df5b82df-8f72-4ef1-923f-1cc32b70c253
+  ProCourtsSecret: Qe28Q~-KYo0k92yrIJ0PrHccE4eZ3RjK7KnXlcwv
+  SolutionName: ACMSCore
+  Token: version="9.1.0.27039" SolutionPackageVersion="9.1"
+  dataverse_solution_displayname: ''
+  dataverse_solution_exists: ''
+  dataverse_solution_version: 1.11.1.155
+  system_debug: 'false'
+jobs:
+  Job_1:
+    name: Agent job 1
+    runs-on: windows-2019
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3.5.0
+#     # This item has no matching transformer
+#     - environment: {}
+#       enabled: true
+#       continueOnError: false
+#       alwaysRun: false
+#       displayName: Power DevOps Tool Installer
+#       retryCountOnTaskFailure: 0
+#       task: 04ad1c72-5e49-4686-8a3a-dda6948b0fcd@12
+#       inputs:
+#         nugetFeed: official
+#         nugetSource: https://api.nuget.org/v3/index.json
+#         nugetUsername:
+#         nugetPassword:
+#         nugetUseProxy: true
+#         psFeed: official
+#         psSource: https://www.powershellgallery.com/api/v2
+#         psUsername:
+#         psPassword:
+#         psUseProxy: true
+#         coreToolsVersion:
+#         crmConnectorVersion:
+#         packageDeploymentVersion:
+#         onlineAPIVersion:
+#         checkerVersion:
+#         configMigrationVersion:
+#         powerAppsAdminVersion:
+#         powerAppsVersion:
+#         powerAppsCLIVersion:
+#         msalPSVersion:
+#         mgUsersVersion:
+#         mgGroupsVersion:
+#       task_type: task
+#     # This item has no matching transformer
+#     - environment: {}
+#       enabled: true
+#       continueOnError: false
+#       alwaysRun: false
+#       displayName: 'Power Platform Tool Installer '
+#       retryCountOnTaskFailure: 0
+#       task: 8015465b-f367-4ec4-8215-8edf682574d3@2
+#       inputs:
+#         DefaultVersion: true
+#         PowerAppsAdminVersion: 2.0.66
+#         XrmToolingPackageDeploymentVersion: 3.3.0.891
+#         MicrosoftPowerAppsCheckerVersion: 1.0.12
+#         CrmSdkCoreToolsVersion: 9.1.0.44
+#         XrmOnlineManagementApiVersion: 1.2.0.1
+#       task_type: task
+#     # This item has no matching transformer
+#     - environment: {}
+#       enabled: true
+#       continueOnError: false
+#       alwaysRun: false
+#       displayName: 'Get Solution: ACMSCore'
+#       retryCountOnTaskFailure: 0
+#       task: 4e476451-a01b-4b86-ab9e-658d496f9b17@12
+#       inputs:
+#         crmConnectionString: 'AuthType=ClientSecret; url=https://acms-dev.crm.dynamics.com/; ClientId=${{ env.PCXApplicationId }}; ClientSecret=${{ env.PCXClientSecret }} '
+#         solutionName: "${{ env.SolutionName }}"
+#         crmConnectionTimeout: 120.0
+#         existsVariableName: dataverse_solution_exists
+#         versionVariableName: dataverse_solution_version
+#         displayVariableName: dataverse_solution_displayname
+#       task_type: task
+    - name: Increment Version Number
+      run: |-
+        # Write your PowerShell commands here.
+        Write-Host "Increment version..."
+        $oldVersion = [version]'${{ env.dataverse_solution_version }}'
+        Write-Host "Old Version: $oldVersion"
+        $newVersion = [version]::New($oldVersion.Major,$oldVersion.Minor,$oldVersion.Build,$oldVersion.Revision+1)
+        Write-Host "New Version: $newVersion"
+        Write Host "##vso[task.setvariable variable=dataverse_solution_version]$newVersion"
+      shell: powershell
+#     # This item has no matching transformer
+#     - environment: {}
+#       enabled: true
+#       continueOnError: false
+#       alwaysRun: false
+#       displayName: Set ACMSCore Version
+#       retryCountOnTaskFailure: 0
+#       task: 1cacdeec-c8dd-4091-a522-5a8fbf49c851@12
+#       inputs:
+#         target: crm
+#         crmConnectionString: 'AuthType=ClientSecret; url=https://acms-dev.crm.dynamics.com/; ClientId=${{ env.PCXApplicationId }}; ClientSecret=${{ env.PCXClientSecret }} '
+#         solutionName: "${{ env.SolutionName }}"
+#         unpackedFilesFolder:
+#         versionNumber: "${{ env.dataverse_solution_version }}"
+#       task_type: task
+#     # This item has no matching transformer
+#     - environment: {}
+#       enabled: true
+#       continueOnError: false
+#       alwaysRun: false
+#       displayName: Publish Customizations
+#       retryCountOnTaskFailure: 0
+#       task: f64d3db3-f19a-41dd-bdb8-f8f0e60a4bb1@12
+#       inputs:
+#         crmConnectionString: 'AuthType=ClientSecret; url=https://acms-dev.crm.dynamics.com/; ClientId=${{ env.PCXApplicationId }}; ClientSecret=${{ env.PCXClientSecret }} '
+#         crmConnectionTimeout: 240.0
+#       task_type: task
+#     # This item has no matching transformer
+#     - environment: {}
+#       enabled: true
+#       continueOnError: false
+#       alwaysRun: false
+#       displayName: 'Export Solution: ${{ env.SolutionName }}'
+#       retryCountOnTaskFailure: 0
+#       task: 015e2e58-9c77-4cbc-a9c1-a28158165365@12
+#       inputs:
+#         crmConnectionString: 'AuthType=ClientSecret; url=https://acms-dev.crm.dynamics.com/; ClientId=${{ env.PCXApplicationId }}; ClientSecret=${{ env.PCXClientSecret }} '
+#         solutionName: "${{ env.SolutionName }}"
+#         exportManaged: true
+#         exportUnmanaged: true
+#         targetVersion:
+#         includeVersionInSolutionFile: false
+#         outputPath: "${{ github.workspace }}"
+#         crmConnectionTimeout: 600.0
+#         useAsyncMode: true
+#         asyncWaitTimeout: 3000.0
+#         exportAutoNumberingSettings: false
+#         exportCalendarSettings: false
+#         exportCustomizationSettings: false
+#         exportEmailTrackingSettings: false
+#         exportExternalApplications: false
+#         exportGeneralSettings: false
+#         exportIsvConfig: false
+#         exportMarketingSettings: false
+#         exportOutlookSynchronizationSettings: false
+#         exportRelationshipRoles: false
+#         exportSales: false
+#       task_type: task
+    - name: Publish Pipeline Artifact - Unmanaged
+      uses: actions/upload-artifact@v3.1.1
+      with:
+        name: "${{ env.SolutionName }}"
+        path: "${{ github.workspace }}\\${{ env.SolutionName }}.zip"
+    - name: Publish Pipeline Artifact - Managed
+      uses: actions/upload-artifact@v3.1.1
+      with:
+        name: "${{ env.SolutionName }}_managed"
+        path: "${{ github.workspace }}\\${{ env.SolutionName }}_managed.zip"
+#     # This item has no matching transformer
+#     - environment: {}
+#       enabled: true
+#       continueOnError: false
+#       alwaysRun: false
+#       displayName: Extract Solution
+#       retryCountOnTaskFailure: 0
+#       task: 48834e5a-a932-49af-a7fd-a805b5e1cfb5@12
+#       inputs:
+#         unpackedFilesFolder: "${{ github.workspace }}\\${{ env.SolutionName }}"
+#         mappingFile:
+#         packageType: Both
+#         solutionFile: "${{ github.workspace }}\\${{ env.SolutionName }}.zip"
+#         sourceLoc:
+#         localize: false
+#         treatUnpackWarningsAsErrors: false
+#       task_type: task
+#     # This item has no matching transformer
+#     - environment: {}
+#       enabled: true
+#       continueOnError: false
+#       alwaysRun: false
+#       displayName: 'Power Platform Unpack Solution '
+#       retryCountOnTaskFailure: 0
+#       task: 3cac89bb-1ef1-4aa7-a3c6-36c6e79c700e@2
+#       inputs:
+#         SolutionInputFile: "${{ github.workspace }}\\${{ env.SolutionName }}.zip"
+#         SolutionTargetFolder: "${{ env.SolutionName }}"
+#         SolutionType: Both
+#         OverwriteFiles: true
+#         SingleComponent: None
+#         MapFile:
+#         LocaleTemplate:
+#         Localize: false
+#         UseLcid: false
+#         ProcessCanvasApps: false
+#       task_type: task
+    - name: Commit solution to repo
+      run: |-
+        echo commit all changes
+        git config user.email "lesliemiller@pcx.procentrixinc.com"
+        git config user.name "Automatic Build"
+        git checkout dev
+        git add --all
+        git commit -m "solution init"
+        echo push code to new repo
+        git -c http.extraheader="AUTHORIZATION: bearer ${{ env.System_AccessToken }}" push origin dev
